@@ -130,14 +130,14 @@ The project is developed using the following technologies:
 
 ## 👥 Group Members
 
-| Name             | Student ID | Role             |
-| ---------------- | ---------- | ---------------- |
-| MANATHUNGE A.I   | IT23642096 | Group Member     |
-| Ahamed M.N.A     | IT24104390 | Group Member     |
-| Sarma S.L        | IT25100002 | **Group Leader** |
-| Nayanajith K.A.T | IT25100020 | Group Member     |
-| Herath H.M.A.R.B | IT25100117 | Group Member     |
-| Liyanage D.D.S   | IT25100119 | Group Member     |
+| Name | Student ID |
+|------|------------|
+| MANATHUNGE A.I | IT23642096 |
+| Ahamed M.N.A | IT24104390 |
+| Sarma S.L | IT25100002 |
+| Nayanajith K.A.T | IT25100020 |
+| Herath H.M.A.R.B | IT25100117 |
+| Liyanage D.D.S | IT25100119 |
 
 ## 📈 Expected Outcomes
 
