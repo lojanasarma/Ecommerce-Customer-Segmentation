@@ -3,3 +3,5 @@ openpyxl
 jupyterlab
 numpy
 scikit-learn
+matplotlib
+seaborn
