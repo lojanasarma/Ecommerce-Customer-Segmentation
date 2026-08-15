@@ -66,9 +66,8 @@ We engineered a mathematical RFM matrix and trained/evaluated the following 6 cl
 
 Because customer segmentation is an unsupervised problem without "ground truth" labels, we evaluated the models mathematically using the **Silhouette Score** and the **Davies-Bouldin Index**.
 
-<div align="center">
-  <img src="outputs/figures/model_comparison_silhouette.png" alt="Silhouette Score Comparison Chart" width="800"/>
-</div>
+<img width="3600" height="1800" alt="model_comparison_silhouette" src="https://github.com/user-attachments/assets/5a136d5a-c312-485a-8fa3-2abb681420f8" />
+
 
 | 🏆 Rank | Algorithm | Silhouette Score (Higher is Better) | Davies-Bouldin Index (Lower is Better) |
 | :---: | :--- | :---: | :---: |
