@@ -1,154 +1,138 @@
-# E-Commerce Customer Behavior Analysis and Segmentation
+<div align="center">
+  
+# 🛒 E-Commerce Customer Segmentation 
+**An End-to-End Unsupervised Machine Learning Pipeline**
 
-**Module:** IT2011 – Artificial Intelligence and Machine Learning
-**Group ID:** 2026-Y2-S1-KU-01
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-success?style=for-the-badge)
 
-## 📌 Project Overview
+*Transforming raw transactional data into actionable business intelligence.*
 
-This project addresses a key business intelligence challenge in the retail sector: identifying and understanding different customer groups based on their purchasing behavior.
+</div>
 
-Using the **Online Retail II** dataset, the project applies unsupervised machine learning techniques to transform raw transactional data into meaningful and actionable customer segments. By moving away from a “one-size-fits-all” marketing approach, businesses can use these insights to develop targeted and personalized marketing strategies that improve customer engagement, retention, and return on investment (ROI).
+---
 
-## 🧠 Methodology
+## 📑 Table of Contents
+- [Project Overview](#-project-overview)
+- [Key Features & Business Impact](#-key-features--business-impact)
+- [Dataset](#-dataset)
+- [Machine Learning Architecture](#-machine-learning-architecture)
+- [Final Model Evaluation](#-final-model-evaluation)
+- [Project Structure](#-project-structure)
+- [Meet the Team](#-meet-the-team)
+- [How to Run Locally](#-how-to-run-locally)
 
-The project follows a data-driven machine learning pipeline consisting of the following stages:
+---
 
-### 1. Data Preprocessing
+## 📖 Project Overview
+In the highly competitive e-commerce sector, one-size-fits-all marketing is obsolete. This project implements an end-to-end Machine Learning solution to automatically segment customers based on their historical purchasing behavior. By leveraging **RFM (Recency, Frequency, Monetary)** analytics and **6 distinct Unsupervised Clustering Algorithms**, we empower marketing teams to identify "Champion" customers for loyalty rewards and "At-Risk" customers for targeted interventions.
 
-Raw transaction data is cleaned and prepared for analysis by:
+## ✨ Key Features & Business Impact
+* **Automated Data Cleaning:** Robust pipeline that handles missing IDs, removes return anomalies, and engineered a `TotalPrice` feature across 1M+ rows.
+* **Mathematical RFM Scaling:** Advanced log-transformations (`np.log1p`) and standard scaling applied to mitigate heavy financial right-skewness.
+* **Actionable Customer Tiers:** Segments customers into distinct groups: *Champions, Loyal Customers, At-Risk, and Dormant/Lost*.
+* **Targeted Marketing ROI:** Allows the business to stop wasting ad spend on dormant customers and instead deliver personalized retention campaigns to highly profitable segments.
 
-* Handling missing customer identification values
-* Removing cancelled transactions
-* Correcting or filtering invalid transaction records
-* Preparing relevant variables for customer-level analysis
+---
 
-### 2. Feature Engineering Using RFM Analysis
+## 🗄️ Dataset
+This project utilizes the **Online Retail II** dataset from the UCI Machine Learning Repository, containing over 1 million real-world UK transactional records spanning from 2009 to 2011.
+* **Source:** [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
+* **Size:** 1,067,371 rows
+* **Domain:** E-Commerce, Retail, Financial Data
 
-Customer purchasing behavior is summarized using three important metrics:
+---
 
-* **Recency (R):** The number of days since a customer’s most recent purchase
-* **Frequency (F):** The total number of purchases or transactions made by a customer
-* **Monetary Value (M):** The total amount spent by a customer
+## 🧠 Machine Learning Architecture
 
-These features provide a structured representation of customer behavior and are used as inputs for the clustering model.
+We engineered a mathematical RFM matrix and trained/evaluated the following 6 clustering models to find the optimal mathematical segmentation:
 
-### 3. Machine Learning – Customer Clustering
+### 🎯 Centroid Models
+1. **K-Means Clustering** *(Baseline & Business Recommended)*
+2. **MiniBatch K-Means** *(Scalability Optimization for Millions of Rows)*
+3. **Gaussian Mixture Models (GMM)** *(Probabilistic Soft-Clustering)*
 
-The **K-Means clustering algorithm** is applied to automatically group customers with similar purchasing patterns.
+### 🌳 Density & Hierarchy Models
+4. **Agglomerative Hierarchical** *(Bottom-Up Merging via Ward's Linkage)*
+5. **DBSCAN** *(Density-Based Outlier Detection)*
+6. **Birch** *(Large-Scale Tree Clustering CF Trees)*
 
-The identified customer segments may include categories such as:
+---
 
-* **Champions** – Highly active customers who purchase frequently and spend significant amounts
-* **Loyal Customers** – Customers who make regular purchases and demonstrate consistent engagement
-* **At-Risk Customers** – Previously valuable customers who have not made recent purchases
-* **Bargain Hunters** – Customers who may purchase less frequently or primarily respond to promotions and discounts
+## 📊 Final Model Evaluation
 
-The final segment names will be assigned based on the behavioral characteristics observed in each cluster.
+Because customer segmentation is an unsupervised problem without "ground truth" labels, we evaluated the models mathematically using the **Silhouette Score** and the **Davies-Bouldin Index**.
 
-### 4. Model Evaluation
+<div align="center">
+  <img src="outputs/figures/model_comparison_silhouette.png" alt="Silhouette Score Comparison Chart" width="800"/>
+</div>
 
-The quality and effectiveness of the clustering model are evaluated using mathematical performance metrics, including the:
+| 🏆 Rank | Algorithm | Silhouette Score (Higher is Better) | Davies-Bouldin Index (Lower is Better) |
+| :---: | :--- | :---: | :---: |
+| **#1** | **Birch** | **0.4171** | **0.8805** |
+| #2 | Agglomerative | 0.3862 | 0.9214 |
+| #3 | K-Means | 0.3294 | 1.0138 |
+| #4 | MiniBatch K-Means| 0.3132 | 1.0400 |
+| #5 | DBSCAN | 0.2368 | 1.8006 |
+| #6 | Gaussian Mixture | 0.1677 | 1.6940 |
 
-* **Silhouette Score**
+**Business Conclusion:** While **Birch** achieved the highest mathematical score, we recommend deploying **K-Means** for final business use. K-Means provides highly interpretable "centroids" (average profiles) for each cluster, allowing marketing managers to easily understand the exact RFM metrics that define a "Loyal" vs "Dormant" customer.
 
-The Silhouette Score is used to measure how well customers fit within their assigned clusters and how clearly the clusters are separated from one another.
+---
 
-## 📂 Repository Structure
+## 📁 Project Structure
 
 ```text
-E-Commerce-Customer-Behavior-Analysis/
+Ecommerce-Customer-Segmentation/
 │
-├── data/
-│   └── Dataset files are stored locally and excluded from Git
-│
-├── docs/
-│   ├── Project documentation
-│   ├── Proposal presentation files (.pptx)
-│   └── Final project report
-│
-├── notebooks/
-│   ├── Exploratory Data Analysis (EDA)
-│   └── Initial model development and testing
-│
-├── src/
-│   ├── Data preprocessing scripts
-│   └── Customer clustering pipeline
-│
-├── README.md
-└── requirements.txt
+├── src/                     # Python scripts for data cleaning, EDA, and ML models
+├── notebooks/               # Interactive Jupyter notebooks for all 6 models
+├── outputs/                 
+│   ├── figures/             # Visualizations (EDA charts & Silhouette comparisons)
+│   ├── predictions/         # Zipped CSV prediction results for each model
+│   └── 2_rfm_data_herath.csv # Standardized RFM dataset used for modeling
+├── docs/                    # Final Assignment Report PDFs and Presentations
+├── README.md                # Project documentation
+└── requirements.txt         # Python dependencies (scikit-learn, pandas, etc.)
 ```
 
-> **Note:** The `notebooks/` and `src/` directories are currently under development and will be updated as the project progresses.
+---
 
-## 📊 Dataset
+## 👨‍💻 Meet the Team
 
-**Dataset Name:** Online Retail II
+This project was built collaboratively by a cross-functional team of 6 data scientists:
 
-**Source:** [UCI Machine Learning Repository – Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii?utm_source=chatgpt.com)
+| Name | Role | Core Contributions |
+| :--- | :--- | :--- |
+| **Sarma SSL** | *ML Evaluator* | Model Evaluation (Silhouette), Report Compilation, Ethics |
+| **Nayanajith K.A.T** | *Data Engineer* | Data Cleaning, Missing Values, Anomaly Removal |
+| **Herath H.M.A.R.B** | *Feature Engineer*| RFM Matrix Construction, Log Transformation, Scaling |
+| **Liyanage D.D.S** | *Data Analyst* | Exploratory Data Analysis (EDA) & Visualizations |
+| **Manathunge A.I**| *ML Engineer* | Centroid Model Design (K-Means, MiniBatch, GMM) |
+| **Ahamed M.N.A** | *ML Engineer* | Density Model Design (Agglomerative, DBSCAN, Birch) |
 
-The dataset contains transactional records from a UK-based online retail business. It includes information such as:
+---
 
-* Invoice number
-* Product code
-* Product description
-* Quantity purchased
-* Invoice date
-* Unit price
-* Customer ID
-* Country
+## 🚀 How to Run Locally
 
-### Dataset Setup
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/lojanasarma/Ecommerce-Customer-Segmentation.git
+   cd Ecommerce-Customer-Segmentation
+   ```
 
-1. Download the **Online Retail II** dataset from the UCI Machine Learning Repository.
-2. Place the downloaded dataset file inside the `data/` directory.
-3. Ensure that the file name matches the name expected by the preprocessing scripts or Jupyter notebooks.
+2. **Install the required dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-> **Note:** Dataset files are excluded from the repository using `.gitignore` because of their file size. Each user must download the dataset separately before running the project.
+3. **Execute the pipeline:**
+   * Run the scripts in the `src/` directory in sequential order, or open the visual notebooks in the `notebooks/` folder using JupyterLab!
 
-## 🎯 Project Objectives
-
-The main objectives of this project are to:
-
-* Analyze customer purchasing behavior using transactional data
-* Generate customer-level features using the RFM framework
-* Apply unsupervised machine learning to identify meaningful customer segments
-* Evaluate the quality of the generated clusters
-* Develop understandable customer personas based on cluster characteristics
-* Support data-driven and personalized marketing strategies
-
-## 🛠️ Technologies and Tools
-
-The project is developed using the following technologies:
-
-* **Python**
-* **Jupyter Notebook**
-* **Pandas** – Data manipulation and preprocessing
-* **NumPy** – Numerical computations
-* **Scikit-learn** – K-Means clustering and model evaluation
-* **Matplotlib** – Data visualization
-* **Seaborn** – Statistical data visualization
-
-## 👥 Group Members
-
-| Name | Student ID |
-|------|------------|
-| MANATHUNGE A.I | IT23642096 |
-| Ahamed M.N.A | IT24104390 |
-| Sarma S.L | IT25100002 |
-| Nayanajith K.A.T | IT25100020 |
-| Herath H.M.A.R.B | IT25100117 |
-| Liyanage D.D.S | IT25100119 |
-
-## 📈 Expected Outcomes
-
-The project is expected to produce:
-
-* Clearly defined customer segments based on RFM behavior
-* Customer personas that support business decision-making
-* Visualizations that demonstrate differences between customer groups
-* Insights that can be used to improve customer retention and marketing effectiveness
-* A reusable machine learning pipeline for customer segmentation
-
-## 📄 License
-
-This project is developed for academic purposes as part of the **IT2011 – Artificial Intelligence and Machine Learning** module.
+---
+<div align="center">
+  <i>Built with ❤️ for IT2011 - Artificial Intelligence and Machine Learning</i>
+</div>
