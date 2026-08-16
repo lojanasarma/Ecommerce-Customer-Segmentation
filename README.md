@@ -1,5 +1,6 @@
 <div align="center">
-  
+  <img width="320" height="320" alt="image" src="https://github.com/user-attachments/assets/d2ac6b64-4941-49a9-a4bf-90e45542f6e4" />
+
 # 🛒 E-Commerce Customer Segmentation 
 **An End-to-End Unsupervised Machine Learning Pipeline**
 
